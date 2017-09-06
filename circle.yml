@@ -14,8 +14,8 @@ dependencies:
 test:
   override:
    - echo "test"
-   - docker run -d -p 8080:5000 --name=techtest techtest/techtest ; sleep 5 
-   - curl -I --silent http://localhost:8080/get
+#  - docker run -d -p 8080:5000 --name=techtest techtest/techtest ; sleep 5 
+#  - curl -I --silent http://localhost:8080/get
  
 deployment:
   hub:
