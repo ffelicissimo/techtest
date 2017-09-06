@@ -10,7 +10,7 @@ dependencies:
     - aws --version
   override:
     - docker info
-    - docker build --rm=false -t techtest/techtest .
+    - docker build --rm=false -t ffelicissimo/techtest .
 test:
   override:
    - echo "test"
@@ -22,4 +22,5 @@ deployment:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+      -
       - docker push ffelicissimo/techtest
