@@ -49,7 +49,7 @@ resource "aws_security_group_rule" "nodes-sg-allow-ssh"{
 }
 
 #Rule IN - Port APP PROD
-resource "aws_security_group_rule" "nodes-sg-allow-ssh"{
+resource "aws_security_group_rule" "nodes-sg-allow-prod"{
   type              = "ingress"
   from_port         = 5000
   to_port           = 5000
@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "nodes-sg-allow-ssh"{
 }
 
 #Rule IN - Port APP DEV
-resource "aws_security_group_rule" "nodes-sg-allow-ssh"
+resource "aws_security_group_rule" "nodes-sg-allow-dev"{
   type              = "ingress"
   from_port         = 6000
   to_port           = 6000
@@ -71,7 +71,7 @@ resource "aws_security_group_rule" "nodes-sg-allow-ssh"
 #Create Machine
 resource "aws_instance" "techtest" {
   ami                         = "ami-42b6593b"
-  instance_type               = "t2.micro
+  instance_type               = "t2.micro"
   key_name                    = "admin"
   vpc_security_group_ids      = ["${aws_security_group.nodes-sg.id}"]
   associate_public_ip_address = true
