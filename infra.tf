@@ -39,7 +39,7 @@ resource "aws_security_group_rule" "nodes-sg-egress" {
 }
 
 #Rule IN
-resource "aws_security_group_rule" "nodes-sg-allow-ssh"
+resource "aws_security_group_rule" "nodes-sg-allow-ssh"{
   type              = "ingress"
   from_port         = 22
   to_port           = 22
@@ -49,7 +49,7 @@ resource "aws_security_group_rule" "nodes-sg-allow-ssh"
 }
 
 #Rule IN - Port APP PROD
-resource "aws_security_group_rule" "nodes-sg-allow-ssh"
+resource "aws_security_group_rule" "nodes-sg-allow-ssh"{
   type              = "ingress"
   from_port         = 5000
   to_port           = 5000
