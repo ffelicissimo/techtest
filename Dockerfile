@@ -14,9 +14,6 @@ COPY api.py /usr/src/app
 
 EXPOSE 5000
 
-ENV ENV
-ENV REDIS_HOST
-
 ENTRYPOINT [ "python", "-u", "api.py" ]
 
 CMD []
