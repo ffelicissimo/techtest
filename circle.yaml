@@ -1,0 +1,25 @@
+machine:
+  timezone:
+    America/Sao_Paulo
+  services:
+    - docker
+dependencies:
+  pre:
+    - docker version
+    - docker info
+    - aws --version
+  override:
+    - docker info
+    - docker build --rm=false -t techtest/techtest .
+test:
+  override:
+   - echo "test"
+   - docker run -d -p 8080:5000 --name=techtest techtest/techtest ; sleep 5 
+   - curl -I --silent http://localhost:8080/get
+ 
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+      - docker push techtest/techtest
