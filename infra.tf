@@ -1,7 +1,7 @@
 #Providers
 provider "aws" {
-  access_key = ""
-  secret_key = ""
+  access_key = "access_key"
+  secret_key = "secret_key"
   region     = "eu-west-1"
 }
 
@@ -130,6 +130,27 @@ write_files:
 
         [Install]
         WantedBy=multi-user.target
+    - path: /etc/systemd/system/redis.service
+      owner: root:root
+      permissions: '0660'
+      content: |
+        [Unit]
+        Description=Docker execution app redis
+        Requires=docker.service
+        After=docker.service
+
+        [Service]
+        User=root
+        Restart=on-failure
+        RestartSec=10
+        Type=simple
+        ExecStartPre=-/usr/bin/docker kill redis
+        ExecStartPre=-/usr/bin/docker rm redis
+        ExecStart=/bin/sh -c '/usr/bin/docker run --privileged --name redis -e ENV=development --net=host redis:latest'
+        ExecStop=-/usr/bin/docker stop redis
+
+        [Install]
+        WantedBy=multi-user.target
 runcmd:
   - sleep 30
   - apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
@@ -141,6 +162,7 @@ runcmd:
   - mkdir /etc/systemd/system/docker.service.wants/
   - ln -s /etc/systemd/system/app-prod.service /etc/systemd/system/docker.service.wants/
   - ln -s /etc/systemd/system/app-dev.service /etc/systemd/system/docker.service.wants/
+  - ln -s /etc/systemd/system/redis.service /etc/systemd/system/docker.service.wants/
   - systemctl daemon-reload
   - sleep 10
   - systemctl restart --no-block docker  
