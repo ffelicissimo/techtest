@@ -33,9 +33,9 @@ def get_value():
 if __name__ == "__main__":
     env = os.getenv('ENV', 'production')
     if env == 'production':
-        app.run()
+        app.run(host='0.0.0.0')
     elif env == 'development':
-        app.run(host='0.0.0.0', debug=True)
+        app.run(host='0.0.0.0', port=6000, debug=True)
     else:
         print("ERROR: env {} not supported".format(env))
         sys.exit(1)
